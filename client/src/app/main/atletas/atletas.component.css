@@ -1,0 +1,23 @@
+table {
+  width: 100%;
+}
+.table-container {
+    margin-left: 8%;
+    margin-right: 8%;
+    margin-top: 40px;
+
+  }
+th.mat-sort-header-sorted {
+    color: black;
+  }
+.incluir {
+  right: 40px;
+  bottom: 40px;
+  left: auto;
+  position: absolute;
+}
+.acao {
+  display: flex; 
+  padding: 21px 0; 
+  justify-content: center;  
+}
