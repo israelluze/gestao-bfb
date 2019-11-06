@@ -10,14 +10,15 @@ import { FilesService } from '../../_services/files.service';
 })
 export class MyFilesComponent implements OnInit {
   @Input() finalizado;
-
+  @Input() idAtleta: string;
+  
   _upload = false;
   public files: Observable<Myfile[]>;
 
   constructor(private fileService: FilesService) { }
 
   ngOnInit() {
-    this.files = this.fileService.getFiles();
+    this.files = this.fileService.getFilesbyIdAtleta(this.idAtleta);
   }
 
   getDate(n) {
@@ -25,6 +26,7 @@ export class MyFilesComponent implements OnInit {
   }
 
   delete(f: Myfile) {
+    console.log(f);
     this.fileService.deleteFile(f);
   }
   

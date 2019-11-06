@@ -7,4 +7,5 @@ export interface Myfile {
     path: string;
     id?: string;
     url?: Observable<string>;
+    idAtleta: string;
 }

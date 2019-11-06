@@ -5,6 +5,7 @@ import { of, from, Observable } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Myfile } from '../_models/myfile';
 import { FileEntry } from '../_models/fileEntry';
+import { Atleta } from '../_models/atleta';
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +22,14 @@ export class FilesService {
   uploadFile(f: File) {
     let path = `meusArquivos/${f.name}`;
     let task = this.storage.upload(path, f);
-    task.snapshotChanges()
-      .subscribe((s) => console.log(s));
+    // task.snapshotChanges()
+    //   .subscribe((s) => console.log(s));
   }
 
-  upload(f: FileEntry) {
+  upload(f: FileEntry, id?: string) {
+    // tslint:disable-next-line: prefer-const
     let newfilename = `${(new Date().getTime())}_${f.file.name}`;
+    // tslint:disable-next-line: prefer-const
     let path = `meusArquivos/${newfilename}`;
     f.task = this.storage.upload(path, f.file);
     f.state = f.task.snapshotChanges()
@@ -44,8 +47,9 @@ export class FilesService {
             filename: f.file.name,
             path: path,
             date: (new Date()).getTime(),
-            size: f.file.size
-          })
+            size: f.file.size,
+            idAtleta: id
+          });
         }
       })
     ).subscribe();
@@ -71,6 +75,18 @@ export class FilesService {
           return {id, ...file, url};
         });
       }));
+  }
+
+  getFilesbyIdAtleta(idAtleta: string): Observable<Myfile[]> {
+    return this.afs.collection<Myfile>('arquivos', ref => ref.where('idAtleta', '==', idAtleta)).snapshotChanges()
+    .pipe(map((actions) => {
+      return actions.map(a => {
+        const file: Myfile = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        const url = this.storage.ref(file.path).getDownloadURL();
+        return {id, ...file, url};
+      });
+    }));
   }
 
   deleteFile(f: Myfile) {

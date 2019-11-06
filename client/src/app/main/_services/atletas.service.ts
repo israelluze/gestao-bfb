@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { Atleta } from '../_models/atleta';
-import { Observable } from 'rxjs';
-import { async } from '@angular/core/testing';
-
+import { Observable, pipe } from 'rxjs';
+import { ConverteDataService } from 'src/app/utils/converteData.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class AtletasService {
 
   private atletasCollection: AngularFirestoreCollection<Atleta> = this.afs.collection('atletas');
   atleta: Atleta;
-constructor(private afs: AngularFirestore) { }
+constructor(private afs: AngularFirestore, private converte: ConverteDataService) { }
 
   getAtletas(): Observable<Atleta[]> {
 
@@ -23,14 +23,18 @@ constructor(private afs: AngularFirestore) { }
   addAtleta(a: Atleta) {
 
     a.id = this.afs.createId();
-    this.atletasCollection.doc(a.id).set(a);
+    a.dataNascimento = new Date(a.dataNascimento);
+    a.dataCarteira = new Date(a.dataCarteira);
+    return this.atletasCollection.doc(a.id).set(a);
   }
 
   deleteAtleta(id: string) {
-    this.atletasCollection.doc(id).delete();
+    return this.atletasCollection.doc(id).delete();
   }
 
   updateAtleta(a: Atleta) {
+    a.dataNascimento = new Date(a.dataNascimento);
+    a.dataCarteira = new Date(a.dataCarteira);
     return this.atletasCollection.doc(a.id).set(a);
   }
 
@@ -43,5 +47,9 @@ constructor(private afs: AngularFirestore) { }
 
     // this.atletasCollection.doc<Atleta>(id).valueChanges().subscribe((a: Atleta) => this.atleta = a);
     return this.atletasCollection.doc<Atleta>(id).valueChanges();
+  }
+
+  geraIdAtleta() {
+    return this.afs.createId();
   }
 }

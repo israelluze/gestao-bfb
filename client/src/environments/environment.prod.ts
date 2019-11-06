@@ -7,6 +7,7 @@ export const environment = {
     projectId: 'bfbgestao',
     storageBucket: 'bfbgestao.appspot.com',
     messagingSenderId: '1038814741501',
+    locationId: 'southamerica-east1',
     appId: '1:1038814741501:web:8d78f26eecb58a671ecf94',
     measurementId: 'G-3CRZMTXHKK'
   }

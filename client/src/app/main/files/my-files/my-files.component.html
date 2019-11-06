@@ -14,7 +14,7 @@
 <div fxLayout="row" fxLayoutAlign="center start" class="upload">
     <button mat-raised-button color="primary" (click)="upload()" *ngIf="_upload == false"><mat-icon>cloud_upload</mat-icon> &nbsp; Upload de arquivos</button>                            
 </div>
-<app-upload-files *ngIf="_upload == true || finalizado == false"></app-upload-files> 
+<app-upload-files [idAtleta]="idAtleta" *ngIf="_upload == true || finalizado == false"></app-upload-files> 
 
 
 

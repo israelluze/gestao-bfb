@@ -24,13 +24,15 @@
 
     <mat-menu xPosition="before" [overlapTrigger]="false" 
               #profileMenu="matMenu" class="before">
-      <p class="username">{{(user$|async)?.email}}</p>
+      <p fxLayoutAlign="center center" class="username">{{(user$|async)?.nome}}</p>
       <mat-divider></mat-divider>
-
-      <button mat-menu-item >
+     
+      <button mat-menu-item (click)="logout()" >
         <mat-icon>exit_to_app</mat-icon>
         Saída
       </button>
+     
+      
     </mat-menu>
 
 

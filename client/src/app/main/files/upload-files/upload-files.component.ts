@@ -1,7 +1,8 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, Input } from '@angular/core';
 import { FileEntry } from '../../_models/fileEntry';
 import { FilesService } from '../../_services/files.service';
 import { MatSnackBar } from '@angular/material';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-upload-files',
@@ -10,6 +11,8 @@ import { MatSnackBar } from '@angular/material';
 })
 export class UploadFilesComponent implements OnInit {
   @Output() finalizado: boolean;
+  @Input() idAtleta: string;
+
   private files: FileEntry[] = [];
 
   constructor(private filesService: FilesService,
@@ -32,7 +35,8 @@ export class UploadFilesComponent implements OnInit {
             paused: null,
             state: null,
             task: null,
-            uploading: null
+            uploading: null,
+            url: null
          });
     }
   }
@@ -46,14 +50,12 @@ export class UploadFilesComponent implements OnInit {
       // tslint:disable-next-line: prefer-for-of
       for (let i = 0; i < this.files.length; i++) {
 
-        this.filesService.upload(this.files[i]);
-        this.files[i].finished.subscribe(a => {
+        this.filesService.upload(this.files[i], this.idAtleta);
+        this.files[i].finished.subscribe( a => {
           this.snackbar.open('Upload efetuado com sucesso!', 'OK', {duration: 2000});
         }, erro => {this.snackbar.open('Ocorreu um erro ao enviar arquivo' + erro, 'OK', {duration: 2000})});
       }
-
       this.finalizado = true;
-
   }
 
 }

@@ -12,4 +12,5 @@ export interface FileEntry{
     canceled: Observable<boolean>;
     bytesuploaded: Observable<number>;
     state: Observable<string>;
+    url: string;
 }

@@ -13,5 +13,13 @@ converteData(data: any): Object {
   const datePipe = new DatePipe('pt-Br');
   return datePipe.transform(data.seconds * 1000, 'dd/MM/yyyy');
 }
+converteDataUtc(data: any): Object {  
+  const datePipe = new DatePipe('en-US');
+  return datePipe.transform(data, 'en-US');
+}
+converteDataTimeStampUtc(data: any): Object {
+  const datePipe = new DatePipe('en-US');
+  return datePipe.transform(data.seconds * 1000, 'MM/dd/yyyy');
+}
 
 }
