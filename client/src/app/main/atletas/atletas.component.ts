@@ -97,11 +97,15 @@ export class AtletasComponent implements OnInit {
     this.router.navigateByUrl(`/main/atletas/add/${id}`);
   }
 
+  consulta(id: string) {
+    this.router.navigateByUrl(`/main/atletas/consulta/${id}`);
+  }
+
   refresh() {
     setTimeout(() => {
       this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    }, 500);
+    }, 700);
   }
 }

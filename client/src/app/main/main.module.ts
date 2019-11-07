@@ -9,6 +9,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { DropzoneComponent } from './files/dropzone/dropzone.component';
 import { UploadFilesComponent } from './files/upload-files/upload-files.component';
 import { MyFilesComponent } from './files/my-files/my-files.component';
+import { ConsultaAtletaComponent } from './atletas/consulta-atleta/consulta-atleta.component';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { MyFilesComponent } from './files/my-files/my-files.component';
   declarations: [
     AtletasComponent,
     DetailAtletaComponent,
+    ConsultaAtletaComponent,
     DropzoneComponent,
     UploadFilesComponent,
     MyFilesComponent

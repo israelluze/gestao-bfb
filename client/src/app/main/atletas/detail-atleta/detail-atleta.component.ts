@@ -85,7 +85,6 @@ export class DetailAtletaComponent implements OnInit {
               ) {}
 
   ngOnInit() {
-
     this.atletaId = this.route.snapshot.paramMap.get('id');
 
     if (this.atletaId) {
