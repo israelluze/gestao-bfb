@@ -3,8 +3,11 @@ import { Atleta } from '../_models/atleta';
 import * as faker from 'faker';
 import { Observable, pipe } from 'rxjs';
 import { AtletasService } from '../_services/atletas.service';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MAT_RIPPLE_GLOBAL_OPTIONS, RippleGlobalOptions } from '@angular/material';
 import { Router } from '@angular/router';
+import { ConverteDataService } from 'src/app/utils/converteData.service';
+import { FilesService } from '../_services/files.service';
+
 
 @Component({
   selector: 'app-atletas',
@@ -16,11 +19,16 @@ export class AtletasComponent implements OnInit {
   atletas$: Observable<Atleta[]>;
   step = 0;
   atleta: Atleta = new Atleta();
+  public emdia = 0;
+  public vencendo = 0;
+  public vencidas = 0;
 
   displayedColumns: string[] = [
     'nome',
     'dataNascimento',
+    'idade',
     'dataCarteira',
+    'diasVencto',
     'acao'
   ];
   dataSource = new MatTableDataSource<Atleta>(this.ELEMENT_DATA);
@@ -28,7 +36,10 @@ export class AtletasComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private atletasService: AtletasService, private router: Router) {
+  constructor(private atletasService: AtletasService,
+              private filesService: FilesService,
+              private router: Router,
+              private convert: ConverteDataService) {
     this.atletas$ = this.atletasService.getAtletas();
     this.atletas$.subscribe(a => (this.ELEMENT_DATA = a));
   }
@@ -89,6 +100,14 @@ export class AtletasComponent implements OnInit {
   }
 
   delete(id: string) {
+    this.filesService.getFilesbyIdAtleta(id).subscribe((files) => {
+      // tslint:disable-next-line: prefer-for-of
+      for (let i = 0; i < files.length; i++) {
+        setTimeout(() => {
+          this.filesService.deleteFile(files[i]);
+        }, 500);
+      }
+    });
     this.atletasService.deleteAtleta(id);
     this.refresh();
   }
@@ -103,9 +122,41 @@ export class AtletasComponent implements OnInit {
 
   refresh() {
     setTimeout(() => {
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < this.ELEMENT_DATA.length; index++) {
+
+        this.ELEMENT_DATA[index].idade = this.calculaIdade(this.convert.converteDataTimeStampUtc(this.ELEMENT_DATA[index].dataNascimento));
+
+        this.ELEMENT_DATA[index].diasValidade = this.calculaValidade(this.convert
+            .converteDataTimeStampUtc(this.ELEMENT_DATA[index].dataCarteira));
+        console.log(this.ELEMENT_DATA[index].diasValidade);
+        if (this.ELEMENT_DATA[index].diasValidade > 0 && this.ELEMENT_DATA[index].diasValidade < 60) {
+          this.ELEMENT_DATA[index].color = 'red';
+          this.ELEMENT_DATA[index].font = 'normal';
+          this.vencendo += 1;
+        } else if (this.ELEMENT_DATA[index].diasValidade < 0) {
+          this.vencidas += 1;
+          this.ELEMENT_DATA[index].color = 'red';
+          this.ELEMENT_DATA[index].font = 'normal';
+        } else {
+          this.emdia += 1;
+        }
+      }
       this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }, 700);
+  }
+  calculaIdade(data: string) {
+    const timeDiff = Math.abs(Date.now() - Date.parse(data));
+    const age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365.25);
+    return age;
+  }
+  calculaValidade(data: string) {
+    const dataAtual = new Date(Date.now());
+    const dataValidade = new Date(data);
+    const timeDiff = Math.ceil(dataValidade.getTime() - dataAtual.getTime());
+    const validade = Math.ceil((timeDiff / (1000 * 3600 * 24)));
+    return validade;
   }
 }

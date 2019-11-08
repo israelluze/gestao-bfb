@@ -9,15 +9,15 @@ export class ConverteDataService {
 
 constructor() { }
 
-converteData(data: any): Object {
+converteData(data: any): string {
   const datePipe = new DatePipe('pt-Br');
   return datePipe.transform(data.seconds * 1000, 'dd/MM/yyyy');
 }
-converteDataUtc(data: any): Object {  
+converteDataUtc(data: any): string {  
   const datePipe = new DatePipe('en-US');
   return datePipe.transform(data, 'en-US');
 }
-converteDataTimeStampUtc(data: any): Object {
+converteDataTimeStampUtc(data: any): string {
   const datePipe = new DatePipe('en-US');
   return datePipe.transform(data.seconds * 1000, 'MM/dd/yyyy');
 }

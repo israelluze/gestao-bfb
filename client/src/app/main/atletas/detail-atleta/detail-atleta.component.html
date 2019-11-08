@@ -8,7 +8,7 @@
                 <h3>Informações da Atleta</h3>
                 <div fxLayout="column" >
                   <mat-form-field fxFlex="80">
-                        <input matInput placeholder="Atleta" formControlName="nome" #nome />
+                        <input matInput required placeholder="Atleta" formControlName="nome" #nome />                        
                   </mat-form-field>                  
                   <mat-form-field fxFlex="80">
                     <input
@@ -30,7 +30,8 @@
                 <div fxLayout="row" fxLayoutAlign="start center">
                   <mat-form-field fxFlex="30">
                     <input
-                      matInput                      
+                      matInput    
+                      required                  
                       [matDatepicker]="picker"                            
                       placeholder="Data de Nascimento"
                       formControlName="dataNascimento"
@@ -45,6 +46,7 @@
                   <mat-form-field fxFlex="30">
                     <input
                       matInput
+                      required
                       [matDatepicker]="picker1"
                       placeholder="Validade Carteirinha"                      
                       formControlName="dataCarteira"
@@ -112,6 +114,7 @@
                     <mat-icon matPrefix>phone</mat-icon>
                     <input
                       matInput
+                      required
                       [textMask]="{mask: phoneMask}"
                       placeholder="Telefone"
                       formControlName="telefone"
@@ -157,6 +160,7 @@
                   <mat-form-field>
                       <mat-label>Cidade</mat-label>
                       <mat-select
+                        required
                         placeholder="Cidade"
                         formControlName="cidade"
                         #cidade
@@ -168,7 +172,7 @@
                   </mat-form-field>
                   <mat-form-field>
                       <mat-label>País</mat-label>
-                      <mat-select
+                      <mat-select required
                         placeholder="País"
                         formControlName="pais"
                         #pais

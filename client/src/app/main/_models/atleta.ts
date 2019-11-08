@@ -2,7 +2,9 @@ export class Atleta {
   id?: string;
   nome: string;
   dataNascimento: Date;
+  idade?: number;
   dataCarteira: Date;
+  diasValidade?: number;
   nomePai: string;
   nomeMae: string;
   rua: string;
@@ -19,4 +21,6 @@ export class Atleta {
   medicamento: boolean;
   descricaoMedicamento: string;
   urlCarteirinha: string;
+  color?: string;
+  font?: string;
 }

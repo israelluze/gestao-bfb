@@ -1,8 +1,15 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef, Output } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  ViewChild,
+  ElementRef,
+  Output
+} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AtletasService } from '../../_services/atletas.service';
 import { Atleta } from '../../_models/atleta';
-import { MatSnackBar} from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { Listas } from '../../_models/listas';
 import { FilesService } from '../../_services/files.service';
 import { ActivatedRoute } from '@angular/router';
@@ -17,13 +24,54 @@ import { ConverteDataService } from 'src/app/utils/converteData.service';
   providers: [DatePipe]
 })
 export class DetailAtletaComponent implements OnInit {
-
-  @ViewChild('nome', {static: true}) nome1: ElementRef;
+  @ViewChild('nome', { static: true }) nome1: ElementRef;
   @Output() idAtleta: string;
 
-  public phoneMask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-  public celPhoneMask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-  public cepMask = [/[1-9]/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
+  public phoneMask = [
+    '(',
+    /[1-9]/,
+    /\d/,
+    ')',
+    ' ',
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+    '-',
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/
+  ];
+  public celPhoneMask = [
+    '(',
+    /[1-9]/,
+    /\d/,
+    ')',
+    ' ',
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+    '-',
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/
+  ];
+  public cepMask = [
+    /[1-9]/,
+    /\d/,
+    '.',
+    /\d/,
+    /\d/,
+    /\d/,
+    '-',
+    /\d/,
+    /\d/,
+    /\d/
+  ];
 
   tipoSelecionado: string;
   possuiAlergia = false;
@@ -44,9 +92,7 @@ export class DetailAtletaComponent implements OnInit {
     { value: 'O+', viewValue: 'O+' },
     { value: 'O-', viewValue: 'O-' }
   ];
-  paises: Listas[] = [
-    { value: 'Brasil', viewValue: 'Brasil' }
-  ];
+  paises: Listas[] = [{ value: 'Brasil', viewValue: 'Brasil' }];
   cidades: Listas[] = [
     { value: 'Blumenau', viewValue: 'Blumenau' },
     { value: 'Gaspar', viewValue: 'Gaspar' },
@@ -76,44 +122,49 @@ export class DetailAtletaComponent implements OnInit {
     urlCarteirinha: ['']
   });
 
-  constructor(private fb: FormBuilder,
-              private ats: AtletasService,
-              private snackBar: MatSnackBar,
-              private fileService: FilesService,
-              private route: ActivatedRoute,
-              private convert: ConverteDataService
-              ) {}
+  constructor(
+    private fb: FormBuilder,
+    private ats: AtletasService,
+    private snackBar: MatSnackBar,
+    private fileService: FilesService,
+    private route: ActivatedRoute,
+    private convert: ConverteDataService
+  ) {}
 
   ngOnInit() {
     this.atletaId = this.route.snapshot.paramMap.get('id');
 
     if (this.atletaId) {
       this.idAtleta = this.atletaId;
-      this.ats.procuraPorId(this.atletaId).subscribe((ret) => {
-        this.dataCarteira = this.convert.converteDataTimeStampUtc(ret.dataCarteira);
-        this.dataNascimento = this.convert.converteDataTimeStampUtc(ret.dataNascimento);        this.formAtleta.setValue(
-          { id: ret.id,
-            nome: ret.nome,
-            dataNascimento: new Date(this.dataNascimento),
-            dataCarteira: new Date(this.dataCarteira),
-            nomePai: ret.nomePai,
-            nomeMae: ret.nomeMae,
-            rua: ret.rua,
-            bairro: ret.bairro,
-            cidade: ret.cidade,
-            pais: ret.pais,
-            cep: ret.cep,
-            telefone: ret.telefone,
-            celular: ret.celular,
-            whatsapp: ret.whatsapp,
-            tipoSanguineo: ret.tipoSanguineo,
-            alergia: ret.alergia,
-            descricaoAlergia: ret.descricaoAlergia,
-            medicamento: ret.medicamento,
-            descricaoMedicamento: ret.descricaoMedicamento,
-            urlCarteirinha: ret.urlCarteirinha
-          }
-          );
+      this.ats.procuraPorId(this.atletaId).subscribe(ret => {
+        this.dataCarteira = this.convert.converteDataTimeStampUtc(
+          ret.dataCarteira
+        );
+        this.dataNascimento = this.convert.converteDataTimeStampUtc(
+          ret.dataNascimento
+        );
+        this.formAtleta.setValue({
+          id: ret.id,
+          nome: ret.nome,
+          dataNascimento: new Date(this.dataNascimento),
+          dataCarteira: new Date(this.dataCarteira),
+          nomePai: ret.nomePai,
+          nomeMae: ret.nomeMae,
+          rua: ret.rua,
+          bairro: ret.bairro,
+          cidade: ret.cidade,
+          pais: ret.pais,
+          cep: ret.cep,
+          telefone: ret.telefone,
+          celular: ret.celular,
+          whatsapp: ret.whatsapp,
+          tipoSanguineo: ret.tipoSanguineo,
+          alergia: ret.alergia,
+          descricaoAlergia: ret.descricaoAlergia,
+          medicamento: ret.medicamento,
+          descricaoMedicamento: ret.descricaoMedicamento,
+          urlCarteirinha: ret.urlCarteirinha
+        });
         this.possuiAlergia = this.formAtleta.value.alergia;
         this.usaMedicamento = this.formAtleta.value.medicamento;
       });
@@ -123,7 +174,7 @@ export class DetailAtletaComponent implements OnInit {
 
     this.fileService.getFilesbyIdAtleta(this.idAtleta).subscribe(a => {
       if (a.length) {
-         this.possuiArquivos = true;
+        this.possuiArquivos = true;
       } else {
         this.possuiArquivos = false;
       }
@@ -143,31 +194,34 @@ export class DetailAtletaComponent implements OnInit {
   }
   adicionar() {
     try {
-
       this.atleta = this.formAtleta.value;
 
       if (this.atletaId) {
         this.ats.updateAtleta(this.atleta).then(
-          (retorno) => {
+          retorno => {
+            this.snackBar.open('Atleta alterado com sucesso !', 'OK', {
+              duration: 2000
+            });
+          },
+          erro => {
             this.snackBar.open(
-              'Atleta alterado com sucesso !', 'OK', {duration: 2000}
-            );
-          }, (erro) => {
-            this.snackBar.open(
-              'Erro ao registrar alteração do atleta: ' + erro + '!', 'OK', {duration: 2000}
+              'Erro ao registrar alteração do atleta: ' + erro + '!',
+              'OK',
+              { duration: 2000 }
             );
           }
         );
       } else {
         this.ats.addAtleta(this.atleta).then(
-          (retorno) => {
-            this.snackBar.open(
-              'Atleta gravado com sucesso !', 'OK', {duration: 2000}
-            );
-          }, (erro) => {
-            this.snackBar.open(
-              'Erro ao gravar atleta: ' + erro + '!', 'OK', {duration: 2000}
-            );
+          retorno => {
+            this.snackBar.open('Atleta gravado com sucesso !', 'OK', {
+              duration: 2000
+            });
+          },
+          erro => {
+            this.snackBar.open('Erro ao gravar atleta: ' + erro + '!', 'OK', {
+              duration: 2000
+            });
           }
         );
       }
@@ -176,15 +230,14 @@ export class DetailAtletaComponent implements OnInit {
       this.focus();
     } catch (error) {
       console.log(error);
-      this.snackBar.open(
-        'Erro ao gravar atleta: ' + error + '!', 'OK', {duration: 2000}
-      );
+      this.snackBar.open('Erro ao gravar atleta: ' + error + '!', 'OK', {
+        duration: 2000
+      });
     }
   }
 
   focus() {
     setTimeout(() => this.nome1.nativeElement.focus());
   }
-
 
 }

@@ -13,7 +13,7 @@
                     <input [readonly]="true"
                       matInput
                       placeholder="Nome do Pai"
-                      [(ngModel)]="atleta.nomePai"
+                      [(ngModel)]="atleta.nomePai "
                       #nomePai
                     />
                   </mat-form-field>
@@ -34,8 +34,8 @@
                       placeholder="Data de Nascimento"
                       [(ngModel)]="atleta.dataNascimento"
                       #dataNascimento
-                    />
-                    <mat-datepicker #picker></mat-datepicker>
+                    />                    
+                    <mat-icon matSuffix >calendar_today</mat-icon>
                   </mat-form-field>
                   <mat-form-field fxFlex="30">
                     <input [readonly]="true"
@@ -45,28 +45,15 @@
                       [(ngModel)]="atleta.dataCarteira"
                       #dataCarteira
                     />
+                    <mat-icon matSuffix >calendar_today</mat-icon>
                   </mat-form-field>
-                  <mat-form-field fxFlex="20">
-                    <mat-label>Tipo Sanguíneo</mat-label>
-                    <mat-select [readonly]="true"
-                      placeholder="Tipo Sanguíneo"                     
-                      [(ngModel)]="atleta.tipoSanguineo"
-                      #tipoSanguineo
-                    >
-                      <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">
-                        {{ tipo.viewValue }}
-                      </mat-option>
-                    </mat-select>
+                  <mat-form-field>
+                    <input matInput [readonly]="true" placeholder="Tipo Sanguíneo" [(ngModel)]="atleta.tipoSanguineo">
                   </mat-form-field>
                 </div>
+                
                 <div fxLayout="column" style="margin-left: 10px;">
-                  <mat-slide-toggle
-                    [readonly]="true"
-                    color="accent"
-                    [(ngModel)]="atleta.alergia"
-                    #alergia                   
-                    >Possui alergia?</mat-slide-toggle
-                  >
+                <mat-checkbox [disabled]="true" [(ngModel)]="atleta.alergia">Alergia</mat-checkbox>
                   <mat-form-field *ngIf="atleta.alergia" class="descricao">
                     <textarea
                       [readonly]="true"
@@ -77,13 +64,7 @@
                       #descricaoAlergia
                     ></textarea>
                   </mat-form-field>
-                  <mat-slide-toggle
-                    [readonly]="true"
-                    color="accent"
-                    [(ngModel)]="atleta.medicamento"
-                    #medicamento                    
-                    >Faz uso de medicamento?</mat-slide-toggle
-                  >
+                  <mat-checkbox [disabled]="true" [(ngModel)]="atleta.medicamento">Medicamento</mat-checkbox>
                   <mat-form-field *ngIf="atleta.medicamento" class="descricao">
                     <textarea
                       [readonly]="true"
@@ -104,6 +85,7 @@
                     <mat-icon matPrefix>phone</mat-icon>
                     <input
                       matInput
+                      [readonly]="true"
                       [textMask]="{mask: phoneMask}"
                       placeholder="Telefone"
                       [(ngModel)]="atleta.telefone"
@@ -114,6 +96,7 @@
                     <mat-icon matPrefix>phone_iphone</mat-icon>
                     <input
                       matInput
+                      [readonly]="true"
                       [textMask]="{mask: celPhoneMask}"
                       placeholder="Celular"
                       [(ngModel)]="atleta.celular"
@@ -124,6 +107,7 @@
                     <mat-icon matPrefix>phone_in_talk</mat-icon>
                     <input
                       matInput
+                      [readonly]="true"
                       [textMask]="{mask: celPhoneMask}"
                       placeholder="Whatsapp"
                       [(ngModel)]="atleta.whatsapp"
@@ -134,48 +118,32 @@
                 <p>Endereço</p>
                 <div fxLayout="row">
                     <mat-form-field fxFlex="100" >
-                        <input matInput placeholder="Rua" [(ngModel)]="atleta.rua" #rua />
+                        <input matInput [readonly]="true" placeholder="Rua" [(ngModel)]="atleta.rua" #rua />
                     </mat-form-field>      
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center">
                   <mat-form-field>
                     <input
                       matInput
+                      [readonly]="true"
                       placeholder="Bairro"
                       [(ngModel)]="atleta.bairro"
                       #bairro
                     />
                   </mat-form-field>
                   <mat-form-field>
-                      <mat-label>Cidade</mat-label>
-                      <mat-select
-                        placeholder="Cidade"
-                        [(ngModel)]="atleta.cidade"
-                        #cidade
-                      >
-                        <mat-option *ngFor="let c of cidades" [value]="c.value">
-                          {{ c.viewValue }}
-                        </mat-option>
-                      </mat-select>
+                    <input [readonly]="true" matInput placeholder="Cidade" [(ngModel)]="atleta.cidade">
                   </mat-form-field>
                   <mat-form-field>
-                      <mat-label>País</mat-label>
-                      <mat-select
-                        placeholder="País"
-                        [(ngModel)]="atleta.pais"
-                        #pais
-                      >
-                        <mat-option *ngFor="let p of paises" [value]="p.value">
-                          {{ p.viewValue }}
-                        </mat-option>
-                      </mat-select>
+                    <input [readonly]="true" matInput placeholder="País" [(ngModel)]="atleta.pais">
                   </mat-form-field>
                   <mat-form-field>
-                    <input matInput [textMask]="{mask: cepMask}" placeholder="CEP" [(ngModel)]="atleta.cep" #cep />
+                    <input matInput [readonly]="true" [textMask]="{mask: cepMask}" placeholder="CEP" [(ngModel)]="atleta.cep" #cep />
                   </mat-form-field>
                 </div>              
             </mat-tab>
             <mat-tab label="Arquivos"> 
+                <app-upload-files [idAtleta]="idAtleta" *ngIf="possuiArquivos == false">></app-upload-files> 
                 <app-my-files [idAtleta]="idAtleta" *ngIf="possuiArquivos == true"></app-my-files>
             </mat-tab>
         </mat-tab-group>     

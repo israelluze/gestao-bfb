@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { Atleta } from '../../_models/atleta';
 import { Observable } from 'rxjs';
 import { Listas } from '../../_models/listas';
@@ -13,14 +13,60 @@ import { ConverteDataService } from 'src/app/utils/converteData.service';
   templateUrl: './consulta-atleta.component.html',
   styleUrls: ['./consulta-atleta.component.css'],
   providers: [
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { appearance: 'fill' }
+    }
   ]
 })
-export class ConsultaAtletaComponent implements OnInit { 
+export class ConsultaAtletaComponent implements OnInit {
 
-  public phoneMask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-  public celPhoneMask = ['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-  public cepMask = [/[1-9]/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
+  @Output() idAtleta: string;
+  public phoneMask = [
+    '(',
+    /[1-9]/,
+    /\d/,
+    ')',
+    ' ',
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+    '-',
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/
+  ];
+  public celPhoneMask = [
+    '(',
+    /[1-9]/,
+    /\d/,
+    ')',
+    ' ',
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+    '-',
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/
+  ];
+  public cepMask = [
+    /[1-9]/,
+    /\d/,
+    '.',
+    /\d/,
+    /\d/,
+    /\d/,
+    '-',
+    /\d/,
+    /\d/,
+    /\d/
+  ];
 
   tipoSelecionado: string;
   atleta: Atleta;
@@ -38,44 +84,47 @@ export class ConsultaAtletaComponent implements OnInit {
     { value: 'O+', viewValue: 'O+' },
     { value: 'O-', viewValue: 'O-' }
   ];
-  paises: Listas[] = [
-    { value: 'Brasil', viewValue: 'Brasil' }
-  ];
+  paises: Listas[] = [{ value: 'Brasil', viewValue: 'Brasil' }];
   cidades: Listas[] = [
     { value: 'Blumenau', viewValue: 'Blumenau' },
     { value: 'Gaspar', viewValue: 'Gaspar' },
     { value: 'Pomerode', viewValue: 'Pomerode' }
   ];
 
-  constructor(private ats: AtletasService,
-              private snackBar: MatSnackBar,
-              private fileService: FilesService,
-              private route: ActivatedRoute,
-              private convert: ConverteDataService
-              ) {}
+  constructor(
+    private ats: AtletasService,
+    private snackBar: MatSnackBar,
+    private fileService: FilesService,
+    private route: ActivatedRoute,
+    private convert: ConverteDataService
+  ) {}
 
   ngOnInit() {
-    console.log(this.route.snapshot.paramMap.get('id'));
     this.atletaId = this.route.snapshot.paramMap.get('id');
-
+    this.idAtleta = this.atletaId;
     if (this.atletaId) {
       setTimeout(() => {
-        this.ats.procuraPorId(this.atletaId).subscribe((a) => {
+        this.ats.procuraPorId(this.atletaId).subscribe(a => {
           this.atleta = a;
-          this.dataCarteira = this.convert.converteDataTimeStampUtc(this.atleta.dataCarteira);
-          this.dataNascimento = this.convert.converteDataTimeStampUtc(this.atleta.dataNascimento);
+          this.dataCarteira = this.convert.converteDataTimeStampUtc(
+            this.atleta.dataCarteira
+          );
+          this.dataNascimento = this.convert.converteDataTimeStampUtc(
+            this.atleta.dataNascimento
+          );
           this.atleta.dataCarteira = new Date(this.dataCarteira);
           this.atleta.dataNascimento = new Date(this.dataNascimento);
-          });
+        });
+      }, 300);
+      setTimeout(() => {
+        this.fileService.getFilesbyIdAtleta(this.atletaId).subscribe(a => {
+          if (a.length) {
+            this.possuiArquivos = true;
+          } else {
+            this.possuiArquivos = false;
+          }
+        });
       }, 200);
     }
-
-    this.fileService.getFilesbyIdAtleta(this.atletaId).subscribe(a => {
-      if (a.length) {
-         this.possuiArquivos = true;
-      } else {
-        this.possuiArquivos = false;
-      }
-    });
   }
 }
