@@ -3,10 +3,11 @@ import { Atleta } from '../_models/atleta';
 import * as faker from 'faker';
 import { Observable, pipe } from 'rxjs';
 import { AtletasService } from '../_services/atletas.service';
-import { MatTableDataSource, MatPaginator, MatSort, MAT_RIPPLE_GLOBAL_OPTIONS, RippleGlobalOptions } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MAT_RIPPLE_GLOBAL_OPTIONS, RippleGlobalOptions, MatDialog, MatDialogConfig, MAT_DIALOG_SCROLL_STRATEGY_PROVIDER_FACTORY } from '@angular/material';
 import { Router } from '@angular/router';
 import { ConverteDataService } from 'src/app/utils/converteData.service';
 import { FilesService } from '../_services/files.service';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 
 @Component({
@@ -39,7 +40,8 @@ export class AtletasComponent implements OnInit {
   constructor(private atletasService: AtletasService,
               private filesService: FilesService,
               private router: Router,
-              private convert: ConverteDataService) {
+              private convert: ConverteDataService,
+              public dialog: MatDialog) {
     this.atletas$ = this.atletasService.getAtletas();
     this.atletas$.subscribe(a => (this.ELEMENT_DATA = a));
   }
@@ -100,16 +102,26 @@ export class AtletasComponent implements OnInit {
   }
 
   delete(id: string) {
-    this.filesService.getFilesbyIdAtleta(id).subscribe((files) => {
-      // tslint:disable-next-line: prefer-for-of
-      for (let i = 0; i < files.length; i++) {
-        setTimeout(() => {
-          this.filesService.deleteFile(files[i]);
-        }, 500);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: 'Você deseja deletar este registro ?'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.filesService.getFilesbyIdAtleta(id).subscribe((files) => {
+          // tslint:disable-next-line: prefer-for-of
+          for (let i = 0; i < files.length; i++) {
+            setTimeout(() => {
+              this.filesService.deleteFile(files[i]);
+            }, 500);
+          }
+        });
+        this.atletasService.deleteAtleta(id);
+        this.refresh();
       }
     });
-    this.atletasService.deleteAtleta(id);
-    this.refresh();
   }
 
   update(id: string) {
@@ -129,7 +141,7 @@ export class AtletasComponent implements OnInit {
 
         this.ELEMENT_DATA[index].diasValidade = this.calculaValidade(this.convert
             .converteDataTimeStampUtc(this.ELEMENT_DATA[index].dataCarteira));
-        console.log(this.ELEMENT_DATA[index].diasValidade);
+       
         if (this.ELEMENT_DATA[index].diasValidade > 0 && this.ELEMENT_DATA[index].diasValidade < 60) {
           this.ELEMENT_DATA[index].color = 'red';
           this.ELEMENT_DATA[index].font = 'normal';

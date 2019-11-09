@@ -1,7 +1,6 @@
 import {
   Component,
   OnInit,
-  Inject,
   ViewChild,
   ElementRef,
   Output
@@ -12,9 +11,9 @@ import { Atleta } from '../../_models/atleta';
 import { MatSnackBar } from '@angular/material';
 import { Listas } from '../../_models/listas';
 import { FilesService } from '../../_services/files.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { DatePipe, formatDate } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { ConverteDataService } from 'src/app/utils/converteData.service';
 
 @Component({
@@ -82,6 +81,7 @@ export class DetailAtletaComponent implements OnInit {
   atleta$: Observable<Atleta>;
   dataNascimento;
   dataCarteira;
+  botao = 'Adicionar';
   tipos: Listas[] = [
     { value: 'A+', viewValue: 'A+' },
     { value: 'A-', viewValue: 'A-' },
@@ -128,7 +128,8 @@ export class DetailAtletaComponent implements OnInit {
     private snackBar: MatSnackBar,
     private fileService: FilesService,
     private route: ActivatedRoute,
-    private convert: ConverteDataService
+    private convert: ConverteDataService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -136,6 +137,7 @@ export class DetailAtletaComponent implements OnInit {
 
     if (this.atletaId) {
       this.idAtleta = this.atletaId;
+      this.botao = 'Gravar';
       this.ats.procuraPorId(this.atletaId).subscribe(ret => {
         this.dataCarteira = this.convert.converteDataTimeStampUtc(
           ret.dataCarteira
@@ -167,18 +169,22 @@ export class DetailAtletaComponent implements OnInit {
         });
         this.possuiAlergia = this.formAtleta.value.alergia;
         this.usaMedicamento = this.formAtleta.value.medicamento;
+
+        setTimeout(() => {
+          console.log(this.idAtleta);
+          this.fileService.getFilesbyIdAtleta(this.idAtleta).subscribe(a => {
+            if (a.length) {
+              this.possuiArquivos = true;
+            } else {
+              this.possuiArquivos = false;
+            }
+          });
+        }, 1000);
       });
     } else {
       this.idAtleta = this.ats.geraIdAtleta();
+      this.botao = 'Adicionar';
     }
-
-    this.fileService.getFilesbyIdAtleta(this.idAtleta).subscribe(a => {
-      if (a.length) {
-        this.possuiArquivos = true;
-      } else {
-        this.possuiArquivos = false;
-      }
-    });
   }
 
   // tslint:disable-next-line: use-lifecycle-interface
@@ -211,6 +217,7 @@ export class DetailAtletaComponent implements OnInit {
             );
           }
         );
+        this.router.navigateByUrl('/main/atletas');
       } else {
         this.ats.addAtleta(this.atleta).then(
           retorno => {

@@ -40,8 +40,7 @@ export class RegisterComponent implements OnInit {
             this.snackBar.open('Registrado com sucesso. Use sua nova credencial para fazer login.', 'OK', {duration: 2000});
             this.router.navigateByUrl('/auth/login');
           },
-          (err) => {console.log(err);
-                    this.snackBar.open('Erro. Voce não está registrado', 'OK', {duration: 2000});
+          (err) => {this.snackBar.open('Erro. Voce não está registrado: ' + err  , 'OK', {duration: 3000});
           }
         );
   }

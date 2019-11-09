@@ -1,4 +1,18 @@
 .register-form {
-    max-width: 600px;
+    max-width: 500px;
     margin-top: 40px;
+}
+
+input {
+    text-transform: uppercase;
+    }
+textarea {
+    text-transform: uppercase;
+}
+
+.email {
+    text-transform: lowercase;
+}
+.lower {
+    text-transform: lowercase;
 }

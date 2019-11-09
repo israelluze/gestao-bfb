@@ -29,20 +29,18 @@
                 <div fxLayout="row" fxLayoutAlign="start center">
                   <mat-form-field fxFlex="30">
                     <input [readonly]="true"
-                      matInput                      
-                      [matDatepicker]="picker"                            
+                      matInput                                                                    
                       placeholder="Data de Nascimento"
-                      [(ngModel)]="atleta.dataNascimento"
+                      [ngModel]="atleta.dataNascimento | date: 'dd/MM/yyyy'"
                       #dataNascimento
                     />                    
                     <mat-icon matSuffix >calendar_today</mat-icon>
                   </mat-form-field>
                   <mat-form-field fxFlex="30">
                     <input [readonly]="true"
-                      matInput
-                      [matDatepicker]="picker1"
+                      matInput                      
                       placeholder="Validade Carteirinha"                      
-                      [(ngModel)]="atleta.dataCarteira"
+                      [ngModel]="atleta.dataCarteira | date: 'dd/MM/yyyy'"
                       #dataCarteira
                     />
                     <mat-icon matSuffix >calendar_today</mat-icon>

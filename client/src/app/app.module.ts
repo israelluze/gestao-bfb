@@ -15,6 +15,7 @@ import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, MAT_FORM_FIELD_DEFAULT_OPTIONS } fro
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { ConfirmDialogComponent } from './main/confirm-dialog/confirm-dialog.component';
 
 registerLocaleData(localePt);
 
@@ -22,6 +23,7 @@ registerLocaleData(localePt);
    declarations: [
       AppComponent,
       NotfoundComponent,
+      ConfirmDialogComponent
      ],
    imports: [
       BrowserModule,
@@ -37,6 +39,9 @@ registerLocaleData(localePt);
    providers: [
       { provide: LOCALE_ID, useValue: 'pt-BR' },
    ],
+   entryComponents: [
+      ConfirmDialogComponent
+    ],
    bootstrap: [
       AppComponent
    ]

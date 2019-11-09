@@ -13,7 +13,7 @@ export class UploadFilesComponent implements OnInit {
   @Output() finalizado: boolean;
   @Input() idAtleta: string;
 
-  private files: FileEntry[] = [];
+  public files: FileEntry[] = [];
 
   constructor(private filesService: FilesService,
               private snackbar: MatSnackBar) { }

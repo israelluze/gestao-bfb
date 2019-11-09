@@ -11,9 +11,3 @@ body { margin: 0;  font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-seri
     opacity: 1.8 ;
   }
   
-input {
-  text-transform: uppercase;
-  }
-textarea {
-  text-transform: uppercase;
-}

@@ -11,6 +11,7 @@ import { UploadFilesComponent } from './files/upload-files/upload-files.componen
 import { MyFilesComponent } from './files/my-files/my-files.component';
 import { ConsultaAtletaComponent } from './atletas/consulta-atleta/consulta-atleta.component';
 
+
 @NgModule({
   imports: [
     CommonModule,
