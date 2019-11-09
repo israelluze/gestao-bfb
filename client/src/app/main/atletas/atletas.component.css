@@ -1,17 +1,17 @@
-table {
+/* table {
   width: 100%;  
-}
+} */
 .table-container {
-
+    overflow: auto;
     margin-left: 8%;
     margin-right: 8%;
     margin-top: 40px;
-    width: 80%;
+    /* width: 80%;    */
 
-  }
-th.mat-sort-header-sorted {
+  } 
+/*th.mat-sort-header-sorted {
     color: red;
-  }
+  } */
 .incluir {
   right: 40px;
   bottom: 40px;
@@ -29,5 +29,18 @@ th.mat-sort-header-sorted {
 }
 .dados {
   margin-top: 20px;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
 }
 
