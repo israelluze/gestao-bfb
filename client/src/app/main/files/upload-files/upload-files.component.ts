@@ -15,29 +15,30 @@ export class UploadFilesComponent implements OnInit {
 
   public files: FileEntry[] = [];
 
-  constructor(private filesService: FilesService,
-              private snackbar: MatSnackBar) { }
+  constructor(
+    private filesService: FilesService,
+    private snackbar: MatSnackBar
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onDropFiles(files: FileList) {
     this.files.splice(0, this.files.length);
     for (let index = 0; index < files.length; index++) {
-         // this.filesService.uploadFile(files.item(index));
-         this.files.push({
-           file: files.item(index),
-           percentage: null,
-            bytesuploaded: null,
-            canceled: null,
-            error: null,
-            finished: null,
-            paused: null,
-            state: null,
-            task: null,
-            uploading: null,
-            url: null
-         });
+      // this.filesService.uploadFile(files.item(index));
+      this.files.push({
+        file: files.item(index),
+        percentage: null,
+        bytesuploaded: null,
+        canceled: null,
+        error: null,
+        finished: null,
+        paused: null,
+        state: null,
+        task: null,
+        uploading: null,
+        url: null
+      });
     }
   }
 
@@ -46,16 +47,13 @@ export class UploadFilesComponent implements OnInit {
   }
 
   uploadAll() {
-
-      // tslint:disable-next-line: prefer-for-of
-      for (let i = 0; i < this.files.length; i++) {
-
-        this.filesService.upload(this.files[i], this.idAtleta);
-        this.files[i].finished.subscribe( a => {
-          this.snackbar.open('Upload efetuado com sucesso!', 'OK', {duration: 2000});
-        }, erro => {this.snackbar.open('Ocorreu um erro ao enviar arquivo' + erro, 'OK', {duration: 2000})});
-      }
-      this.finalizado = true;
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < this.files.length; i++) {
+      this.filesService.upload(this.files[i], this.idAtleta);
+      //   this.files[i].finished.subscribe( a => {
+      //     this.snackbar.open('Upload efetuado com sucesso!', 'OK', {duration: 2000});
+      //   }, erro => {this.snackbar.open('Ocorreu um erro ao enviar arquivo' + erro, 'OK', {duration: 2000})});
+    }
+    this.finalizado = true;
   }
-
 }

@@ -18,7 +18,7 @@ export class MyFilesComponent implements OnInit {
   constructor(private fileService: FilesService) { }
 
   ngOnInit() {
-    this.files = this.fileService.getFilesbyIdAtleta(this.idAtleta);
+   this.files = this.fileService.getFilesbyIdAtleta(this.idAtleta);
   }
 
   getDate(n) {
@@ -26,10 +26,9 @@ export class MyFilesComponent implements OnInit {
   }
 
   delete(f: Myfile) {
-    console.log(f);
     this.fileService.deleteFile(f);
   }
-  
+
   upload() {
     this._upload = true;
   }

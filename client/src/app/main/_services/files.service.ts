@@ -22,14 +22,12 @@ export class FilesService {
   uploadFile(f: File) {
     let path = `meusArquivos/${f.name}`;
     let task = this.storage.upload(path, f);
-    // task.snapshotChanges()
-    //   .subscribe((s) => console.log(s));
+    task.snapshotChanges()
+        .subscribe((s) => console.log(s));
   }
 
-  upload(f: FileEntry, id?: string) {
-    // tslint:disable-next-line: prefer-const
-    let newfilename = `${(new Date().getTime())}_${f.file.name}`;
-    // tslint:disable-next-line: prefer-const
+  upload(f: FileEntry, id?: string) {    
+    let newfilename = `${(new Date().getTime())}_${f.file.name}`;    
     let path = `meusArquivos/${newfilename}`;
     f.task = this.storage.upload(path, f.file);
     f.state = f.task.snapshotChanges()
