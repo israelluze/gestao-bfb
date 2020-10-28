@@ -142,10 +142,14 @@ export class AtletasComponent implements OnInit {
         this.ELEMENT_DATA[index].diasValidade = this.calculaValidade(this.convert
             .converteDataTimeStampUtc(this.ELEMENT_DATA[index].dataCarteira));
        
-        if (this.ELEMENT_DATA[index].diasValidade > 0 && this.ELEMENT_DATA[index].diasValidade < 60) {
+        if (this.ELEMENT_DATA[index].diasValidade > 0 && this.ELEMENT_DATA[index].diasValidade < 30) {
           this.ELEMENT_DATA[index].color = 'red';
           this.ELEMENT_DATA[index].font = 'normal';
           this.vencendo += 1;
+        } else if (this.ELEMENT_DATA[index].diasValidade > 30 && this.ELEMENT_DATA[index].diasValidade < 60) {
+            this.ELEMENT_DATA[index].color = 'purple';
+            this.ELEMENT_DATA[index].font = 'normal';
+            this.vencendo += 1;
         } else if (this.ELEMENT_DATA[index].diasValidade < 0) {
           this.vencidas += 1;
           this.ELEMENT_DATA[index].color = 'red';

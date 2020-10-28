@@ -86,8 +86,7 @@ import {
   ],
   declarations: [],
   providers: [
-    {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true, strict: true}},
-    {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
+   
   ]
 })
 export class MaterialModule { }
