@@ -16,14 +16,17 @@ export class DropzoneComponent implements OnInit {
 
   onDragOverEvent(event: DragEvent) {
     event.preventDefault();
+    console.log('onDragOverEvent');
     this.isDraggingOver = true;
   }
   onDragLeaveEvent(event: DragEvent ) {
     event.preventDefault();
+    console.log('onDragLeaveEvent');
     this.isDraggingOver = false;
   }
   onDropEvent(event) {
     event.preventDefault();
+    console.log('onDropEvent');
     this.droppedFiles.emit(event.dataTransfer.files);
   }
 

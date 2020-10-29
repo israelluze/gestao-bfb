@@ -4,6 +4,9 @@ export class Atleta {
   dataNascimento: Date;
   idade?: number;
   dataCarteira: Date;
+  numeroRegistroFCB: string;
+  numeroRegistroCBB: string;
+  identidade: string;
   diasValidade?: number;
   nomePai: string;
   nomeMae: string;

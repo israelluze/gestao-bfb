@@ -1,7 +1,7 @@
 <div fxLayout="column">
   <!-- <h3 fxFlexAlign="center">Relação de Atletas</h3> -->
 
-  <button mat-fab class="incluir" routerLink='add'><mat-icon>add</mat-icon></button>
+  <button mat-fab class="incluir" routerLink='add'><mat-icon>add</mat-icon></button>  
 
   <mat-accordion>
 
@@ -19,6 +19,11 @@
     </div>   
 
     <div  class="table-container mat-elevation-z8">
+
+      <mat-form-field class="search"> 
+        <mat-icon matPrefix>search</mat-icon>       
+        <input matInput (keyup)="pesquisar($event)" #input>
+      </mat-form-field>
 
       <table mat-table [dataSource]="dataSource" matSort  >
         

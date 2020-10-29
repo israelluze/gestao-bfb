@@ -119,7 +119,10 @@ export class DetailAtletaComponent implements OnInit {
     descricaoAlergia: [''],
     medicamento: [''],
     descricaoMedicamento: [''],
-    urlCarteirinha: ['']
+    urlCarteirinha: [''],
+    numeroRegistroFCB: [''],
+    numeroRegistroCBB: [''],
+    identidade: ['']
   });
 
   constructor(
@@ -165,7 +168,10 @@ export class DetailAtletaComponent implements OnInit {
           descricaoAlergia: ret.descricaoAlergia,
           medicamento: ret.medicamento,
           descricaoMedicamento: ret.descricaoMedicamento,
-          urlCarteirinha: ret.urlCarteirinha
+          urlCarteirinha: ret.urlCarteirinha,
+          numeroRegistroFCB: ret.numeroRegistroFCB ? ret.numeroRegistroFCB : '',
+          numeroRegistroCBB: ret.numeroRegistroCBB ? ret.numeroRegistroCBB : '',
+          identidade: ret.identidade ? ret.identidade : ''
         });
         this.possuiAlergia = this.formAtleta.value.alergia;
         this.usaMedicamento = this.formAtleta.value.medicamento;

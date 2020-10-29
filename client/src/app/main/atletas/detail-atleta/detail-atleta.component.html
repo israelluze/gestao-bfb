@@ -28,7 +28,15 @@
                   </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center">
-                  <mat-form-field fxFlex="30">
+                  <mat-form-field >
+                    <input
+                      matInput
+                      placeholder="Documento"
+                      formControlName="identidade"
+                      #identidade
+                    />
+                  </mat-form-field>
+                  <mat-form-field >                    
                     <input
                       matInput    
                       required                  
@@ -43,7 +51,15 @@
                     ></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
-                  <mat-form-field fxFlex="30">
+                  <mat-form-field >
+                    <input
+                      matInput
+                      placeholder="Nº Registro FCB"
+                      formControlName="numeroRegistroFCB"
+                      #numeroRegistroFCB
+                    />
+                  </mat-form-field>
+                  <mat-form-field >
                     <input
                       matInput
                       required
@@ -51,12 +67,20 @@
                       placeholder="Validade Carteirinha"                      
                       formControlName="dataCarteira"
                       #dataCarteira
-                    />
+                    />                    
                     <mat-datepicker-toggle
                       matSuffix
                       [for]="picker1"
                     ></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field >
+                    <input
+                      matInput
+                      placeholder="Nº Registro CBB"
+                      formControlName="numeroRegistroCBB"
+                      #numeroRegistroCBB
+                    />
                   </mat-form-field>
                   <mat-form-field fxFlex="20">
                     <mat-label>Tipo Sanguíneo</mat-label>
@@ -69,8 +93,9 @@
                         {{ tipo.viewValue }}
                       </mat-option>
                     </mat-select>
-                  </mat-form-field>
+                  </mat-form-field> 
                 </div>
+                
                 <div fxLayout="column" style="margin-left: 10px;">
                   <mat-slide-toggle
                     color="accent"

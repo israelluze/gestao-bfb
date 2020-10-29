@@ -6,10 +6,14 @@
             <mat-tab label="Informações da Atleta"> 
                 <h3>Informações da Atleta</h3>
                 <div fxLayout="column" >
+
                   <mat-form-field fxFlex="80" >
+                    <mat-label>Atleta</mat-label>
                         <input [readonly]="true" matInput placeholder="Atleta" [(ngModel)]="atleta.nome" #nome />
-                  </mat-form-field>                  
+                  </mat-form-field>  
+
                   <mat-form-field fxFlex="80">
+                    <mat-label>Nome do Pai</mat-label>
                     <input [readonly]="true"
                       matInput
                       placeholder="Nome do Pai"
@@ -17,7 +21,9 @@
                       #nomePai
                     />
                   </mat-form-field>
+
                   <mat-form-field fxFlex="80">
+                    <mat-label>Nome da Mãe</mat-label>
                     <input [readonly]="true"
                       matInput
                       placeholder="Nome da Mãe"
@@ -26,17 +32,41 @@
                     />
                   </mat-form-field>
                 </div>
-                <div fxLayout="row" fxLayoutAlign="start center">
-                  <mat-form-field fxFlex="30">
+
+                <div fxLayout="row wrap" fxLayoutAlign="space-evenly center">
+
+                  <mat-form-field fxFlex="auto"  >
+                    <mat-label>Documento</mat-label>
+                    <input
+                      [readonly]="true"
+                      matInput                      
+                      [ngModel]="atleta.identidade"
+                      #identidade
+                    />
+                  </mat-form-field>
+
+                  <mat-form-field >
+                    <mat-label>Data de Nascimento</mat-label>
                     <input [readonly]="true"
-                      matInput                                                                    
-                      placeholder="Data de Nascimento"
+                      matInput                                                                                          
                       [ngModel]="atleta.dataNascimento | date: 'dd/MM/yyyy'"
                       #dataNascimento
                     />                    
                     <mat-icon matSuffix >calendar_today</mat-icon>
                   </mat-form-field>
-                  <mat-form-field fxFlex="30">
+
+                  <mat-form-field >
+                    <mat-label>Nº Registro FCB</mat-label>
+                    <input [readonly]="true"
+                      matInput
+                      placeholder="Nº Registro FCB"
+                      [ngModel]="atleta.numeroRegistroFCB"
+                      #numeroRegistroFCB
+                    />
+                  </mat-form-field>
+                  
+                  <mat-form-field >
+                    <mat-label>Validade FCB</mat-label>
                     <input [readonly]="true"
                       matInput                      
                       placeholder="Validade Carteirinha"                      
@@ -45,9 +75,22 @@
                     />
                     <mat-icon matSuffix >calendar_today</mat-icon>
                   </mat-form-field>
-                  <mat-form-field>
+
+                  <mat-form-field >
+                    <mat-label>Nº Registro CBB</mat-label>
+                    <input  [readonly]="true"
+                      matInput
+                      placeholder="Nº Registro CBB"
+                      [ngModel]="atleta.numeroRegistroCBB"
+                      #numeroRegistroCBB
+                    />
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex="20">
+                    <mat-label>Tipo Sanguíneo</mat-label>
                     <input matInput [readonly]="true" placeholder="Tipo Sanguíneo" [(ngModel)]="atleta.tipoSanguineo">
                   </mat-form-field>
+
                 </div>
                 
                 <div fxLayout="column" style="margin-left: 10px;">
@@ -114,13 +157,15 @@
                   </mat-form-field>
                 </div>
                 <p>Endereço</p>
-                <div fxLayout="row">
+                <div fxLayout="row">                  
                     <mat-form-field fxFlex="100" >
+                        <mat-label>Logradouro</mat-label>
                         <input matInput [readonly]="true" placeholder="Rua" [(ngModel)]="atleta.rua" #rua />
                     </mat-form-field>      
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center">
                   <mat-form-field>
+                    <mat-label>Bairro</mat-label>
                     <input
                       matInput
                       [readonly]="true"
@@ -130,12 +175,15 @@
                     />
                   </mat-form-field>
                   <mat-form-field>
+                    <mat-label>Cidade</mat-label>
                     <input [readonly]="true" matInput placeholder="Cidade" [(ngModel)]="atleta.cidade">
                   </mat-form-field>
                   <mat-form-field>
+                    <mat-label>País</mat-label>
                     <input [readonly]="true" matInput placeholder="País" [(ngModel)]="atleta.pais">
                   </mat-form-field>
                   <mat-form-field>
+                    <mat-label>CEP</mat-label>
                     <input matInput [readonly]="true" [textMask]="{mask: cepMask}" placeholder="CEP" [(ngModel)]="atleta.cep" #cep />
                   </mat-form-field>
                 </div>              

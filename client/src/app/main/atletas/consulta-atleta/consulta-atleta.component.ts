@@ -115,6 +115,7 @@ export class ConsultaAtletaComponent implements OnInit {
           this.atleta.dataCarteira = new Date(this.dataCarteira);
           this.atleta.dataNascimento = new Date(this.dataNascimento);
         });
+        console.log(this.atleta);
       }, 300);
       setTimeout(() => {
         this.fileService.getFilesbyIdAtleta(this.atletaId).subscribe(a => {

@@ -3,7 +3,7 @@ import { Atleta } from '../_models/atleta';
 import * as faker from 'faker';
 import { Observable, pipe } from 'rxjs';
 import { AtletasService } from '../_services/atletas.service';
-import { MatTableDataSource, MatPaginator, MatSort, MAT_RIPPLE_GLOBAL_OPTIONS, RippleGlobalOptions, MatDialog, MatDialogConfig, MAT_DIALOG_SCROLL_STRATEGY_PROVIDER_FACTORY } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort,  MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ConverteDataService } from 'src/app/utils/converteData.service';
 import { FilesService } from '../_services/files.service';
@@ -72,8 +72,10 @@ export class AtletasComponent implements OnInit {
       cidade: faker.address.city(),
       cep: faker.address.zipCode('99-9999'),
       pais: 'Brasil',
-
-      urlCarteirinha: ''
+      urlCarteirinha: '',
+      numeroRegistroFCB: '',
+      numeroRegistroCBB: '',
+      identidade: ''
     };
     this.atletasService.addAtleta(a);
   }
@@ -99,6 +101,11 @@ export class AtletasComponent implements OnInit {
 
   prevStep() {
     this.step--;
+  }
+
+  pesquisar(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   delete(id: string) {
@@ -141,15 +148,11 @@ export class AtletasComponent implements OnInit {
 
         this.ELEMENT_DATA[index].diasValidade = this.calculaValidade(this.convert
             .converteDataTimeStampUtc(this.ELEMENT_DATA[index].dataCarteira));
-       
-        if (this.ELEMENT_DATA[index].diasValidade > 0 && this.ELEMENT_DATA[index].diasValidade < 30) {
-          this.ELEMENT_DATA[index].color = 'red';
+
+        if (this.ELEMENT_DATA[index].diasValidade > 0 && this.ELEMENT_DATA[index].diasValidade < 60) {
+          this.ELEMENT_DATA[index].color = 'yellow';
           this.ELEMENT_DATA[index].font = 'normal';
           this.vencendo += 1;
-        } else if (this.ELEMENT_DATA[index].diasValidade > 30 && this.ELEMENT_DATA[index].diasValidade < 60) {
-            this.ELEMENT_DATA[index].color = 'purple';
-            this.ELEMENT_DATA[index].font = 'normal';
-            this.vencendo += 1;
         } else if (this.ELEMENT_DATA[index].diasValidade < 0) {
           this.vencidas += 1;
           this.ELEMENT_DATA[index].color = 'red';

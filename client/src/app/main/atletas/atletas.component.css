@@ -1,6 +1,3 @@
-/* table {
-  width: 100%;  
-} */
 .table-container {
     overflow: auto;
     margin-left: 8%;
@@ -9,20 +6,13 @@
     /* width: 80%;    */
 
   } 
-/*th.mat-sort-header-sorted {
-    color: red;
-  } */
+
 .incluir {
   right: 40px;
-  bottom: 40px;
+  bottom: 40px;  
   left: auto;
   position: absolute;
 }
-/* .acao {
-   display: flex;  
-   padding: 21px 0;  
-   justify-content: center;   
-} */
 
 .totalizador {
   max-width: 80%;  
@@ -42,5 +32,9 @@ table {
 
 td, th {
   width: 25%;
+}
+
+.search {  
+  font-size: large;
 }
 

@@ -7,7 +7,7 @@ import { ConsultaAtletaComponent } from './atletas/consulta-atleta/consulta-atle
 const routes: Routes = [
   {path: '', redirectTo: 'atletas'},
   {path: 'atletas', component: AtletasComponent},
-  {path: 'atletas/add', component: DetailAtletaComponent},
+  {path: 'atletas/add', component: DetailAtletaComponent},  
   {path: 'atletas/add/:id', component: DetailAtletaComponent},
   {path: 'atletas/consulta/:id', component: ConsultaAtletaComponent}
   // {path: 'atletas', component: AtletasComponent,
