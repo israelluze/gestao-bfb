@@ -96,7 +96,8 @@ export class DetailAtletaComponent implements OnInit {
   cidades: Listas[] = [
     { value: 'Blumenau', viewValue: 'Blumenau' },
     { value: 'Gaspar', viewValue: 'Gaspar' },
-    { value: 'Pomerode', viewValue: 'Pomerode' }
+    { value: 'Pomerode', viewValue: 'Pomerode' },
+    { value: 'Pomerode', viewValue: 'Itajaí' }
   ];
 
   formAtleta = this.fb.group({

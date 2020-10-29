@@ -11,22 +11,21 @@ export class DropzoneComponent implements OnInit {
   isDraggingOver = false;
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onDragOverEvent(event: DragEvent) {
     event.preventDefault();
-    console.log('onDragOverEvent');
+    console.log(event);
     this.isDraggingOver = true;
   }
   onDragLeaveEvent(event: DragEvent ) {
     event.preventDefault();
-    console.log('onDragLeaveEvent');
+    console.log(event);
     this.isDraggingOver = false;
   }
   onDropEvent(event) {
     event.preventDefault();
-    console.log('onDropEvent');
+    console.log(event);
     this.droppedFiles.emit(event.dataTransfer.files);
   }
 

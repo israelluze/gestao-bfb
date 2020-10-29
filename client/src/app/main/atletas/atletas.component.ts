@@ -150,7 +150,7 @@ export class AtletasComponent implements OnInit {
             .converteDataTimeStampUtc(this.ELEMENT_DATA[index].dataCarteira));
 
         if (this.ELEMENT_DATA[index].diasValidade > 0 && this.ELEMENT_DATA[index].diasValidade < 60) {
-          this.ELEMENT_DATA[index].color = 'yellow';
+          this.ELEMENT_DATA[index].color = 'purple';
           this.ELEMENT_DATA[index].font = 'normal';
           this.vencendo += 1;
         } else if (this.ELEMENT_DATA[index].diasValidade < 0) {
