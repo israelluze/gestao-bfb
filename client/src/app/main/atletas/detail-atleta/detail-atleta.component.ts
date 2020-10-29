@@ -97,7 +97,7 @@ export class DetailAtletaComponent implements OnInit {
     { value: 'Blumenau', viewValue: 'Blumenau' },
     { value: 'Gaspar', viewValue: 'Gaspar' },
     { value: 'Pomerode', viewValue: 'Pomerode' },
-    { value: 'Pomerode', viewValue: 'Itajaí' }
+    { value: 'Itajaí', viewValue: 'Itajaí' }
   ];
 
   formAtleta = this.fb.group({
