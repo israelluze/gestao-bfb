@@ -46,9 +46,7 @@ export class AtletasComponent implements OnInit {
     this.atletas$.subscribe(a => (this.ELEMENT_DATA = a));
   }
 
-  ngOnInit() {}
-  // tslint:disable-next-line: use-lifecycle-interface
-  ngAfterViewInit() {
+  ngOnInit() {
     this.refresh();
   }
 
@@ -141,6 +139,11 @@ export class AtletasComponent implements OnInit {
 
   refresh() {
     setTimeout(() => {
+
+      this.vencendo = 0;
+      this.vencidas = 0;
+      this.emdia = 0;
+
       // tslint:disable-next-line: prefer-for-of
       for (let index = 0; index < this.ELEMENT_DATA.length; index++) {
 
@@ -149,22 +152,25 @@ export class AtletasComponent implements OnInit {
         this.ELEMENT_DATA[index].diasValidade = this.calculaValidade(this.convert
             .converteDataTimeStampUtc(this.ELEMENT_DATA[index].dataCarteira));
 
-        if (this.ELEMENT_DATA[index].diasValidade > 0 && this.ELEMENT_DATA[index].diasValidade < 60) {
+        if (this.ELEMENT_DATA[index].diasValidade >= 0 && this.ELEMENT_DATA[index].diasValidade < 60) {
           this.ELEMENT_DATA[index].color = 'purple';
           this.ELEMENT_DATA[index].font = 'normal';
+          this.ELEMENT_DATA[index].status = 'vencendo';
           this.vencendo += 1;
         } else if (this.ELEMENT_DATA[index].diasValidade < 0) {
           this.vencidas += 1;
           this.ELEMENT_DATA[index].color = 'red';
           this.ELEMENT_DATA[index].font = 'normal';
+          this.ELEMENT_DATA[index].status = 'vencida';
         } else {
+          this.ELEMENT_DATA[index].status = 'em dia';
           this.emdia += 1;
         }
       }
       this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    }, 700);
+    }, 1000);
   }
   calculaIdade(data: string) {
     const timeDiff = Math.abs(Date.now() - Date.parse(data));
@@ -178,4 +184,16 @@ export class AtletasComponent implements OnInit {
     const validade = Math.ceil((timeDiff / (1000 * 3600 * 24)));
     return validade;
   }
+
+  filtroStatus(status: string) {
+    this.dataSource.filterPredicate = (data: Atleta, filter: string) => {
+      return data.status === filter;
+   };
+    this.dataSource.filter = status.trim().toLowerCase();
+  }
+
+  limpa(){
+    this.refresh();
+  }
+
 }

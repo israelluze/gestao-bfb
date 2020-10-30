@@ -26,4 +26,5 @@ export class Atleta {
   urlCarteirinha: string;
   color?: string;
   font?: string;
+  status?: string;
 }

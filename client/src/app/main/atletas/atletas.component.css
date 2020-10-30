@@ -10,8 +10,8 @@
 .incluir {
   right: 40px;
   bottom: 40px;  
-  left: auto;
-  position: absolute;
+  /* left: auto; */
+  position: fixed;   
 }
 
 .totalizador {
@@ -36,5 +36,9 @@ td, th {
 
 .search {  
   font-size: large;
+}
+
+.mat-raised-button {
+  color: white;
 }
 

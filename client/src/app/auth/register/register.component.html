@@ -1,5 +1,5 @@
-<div  fxLayout="row" fxLayoutAlign="space-around center" >
-  <div align="center" fxLayout="row" fxLayoutAlign="center center"  class="register-form">
+<div  fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" >
+  <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-around center" fxLayoutGap="25px"  class="register-form">
 
     <form role="form" [formGroup]="formRegister" (ngSubmit)="onSubmit()">
 
@@ -9,22 +9,17 @@
 
       <mat-card-content fxLayout="column" fxLayoutAlign="space-around stretch">
                     
-        <div fxLayout="row" fxLayoutAlign="space-between stretch">
-          <mat-form-field fxFlex="100">
+       
+          <mat-form-field >
             <input matInput type="text" formControlName="nome" 
               autocomplete="nome" placeholder="Nome">
           </mat-form-field> 
-        </div> 
-
-        <div fxLayout="row" fxLayoutAlign="space-between stretch">
+        
           <mat-form-field fxFlex="100">
             <input matInput type="email" formControlName="email" 
               class="lower" value="" autocomplete="email" placeholder="E-mail" >
           </mat-form-field>  
-        </div>
-
-        <div fxLayout="row" fxLayoutAlign="space-between stretch">
-
+        
           <mat-form-field  fxFlex="45">
             <input matInput class="lower" type="password" formControlName="password1" 
               type="password" autocomplete="off">
@@ -40,18 +35,13 @@
             <mat-placeholder>
               <mat-icon>lock_outline</mat-icon> Confirme sua Senha
             </mat-placeholder>
-          </mat-form-field>
-
-        </div>
-
+          </mat-form-field>      
 
         <div fxLayout="row" fxLayoutAlign="end end" >
             <button mat-button color="primary" type="submit" [disabled]="!formRegister.valid">
               <mat-icon>done</mat-icon>&nbsp;Registrar
             </button>
         </div>
-
-
 
         </mat-card-content>
     </mat-card>
